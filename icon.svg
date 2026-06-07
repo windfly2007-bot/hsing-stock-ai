@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Hsing Stock AI">
+  <rect width="512" height="512" rx="96" fill="#17384b"/>
+  <path d="M96 340h320v44H96z" fill="#e9f4f1"/>
+  <path d="M126 302l74-78 68 46 104-132 34 27-129 164-72-48-47 50z" fill="#d93535"/>
+  <circle cx="126" cy="302" r="18" fill="#e9f4f1"/>
+  <circle cx="200" cy="224" r="18" fill="#e9f4f1"/>
+  <circle cx="268" cy="270" r="18" fill="#e9f4f1"/>
+  <circle cx="372" cy="138" r="18" fill="#e9f4f1"/>
+  <text x="256" y="160" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="76" font-weight="800" fill="#ffffff">AI</text>
+</svg>

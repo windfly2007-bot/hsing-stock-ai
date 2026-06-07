@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#17384b" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="Hsing Stock AI" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <title>Hsing Stock AI</title>
+    <link rel="manifest" href="./manifest.json" />
+    <link rel="icon" href="./icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="./icon.svg" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <section class="lock-screen" id="lockScreen" aria-label="密碼登入">
+      <form class="lock-card" id="passwordForm">
+        <p class="eyebrow">Hsing Stock AI</p>
+        <h2>輸入密碼</h2>
+        <p class="lock-copy">這是你的個人持股決策助理。</p>
+        <label class="password-field">
+          <span>密碼</span>
+          <input id="passwordInput" type="password" autocomplete="current-password" inputmode="text" />
+        </label>
+        <p class="password-error" id="passwordError" role="alert"></p>
+        <button class="primary-button" type="submit">解鎖 App</button>
+      </form>
+    </section>
+
+    <main class="app-shell" aria-label="Hsing Stock AI">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">個人持股決策助理</p>
+          <h1>Hsing Stock AI</h1>
+        </div>
+        <button class="icon-button" id="settingsButton" type="button" aria-label="設定">
+          <span aria-hidden="true">⚙</span>
+        </button>
+      </header>
+
+      <section class="page is-active" id="page-home" aria-labelledby="tab-home">
+        <div class="status-panel">
+          <div class="status-main">
+            <span class="signal signal-risk">偏空</span>
+            <p>今日市場燈號</p>
+            <strong>AI 總分 54</strong>
+          </div>
+          <div class="status-note">
+            <span>更新時間：08:28</span>
+            <b>建議：先控風險，09:30 後確認是否止跌。</b>
+          </div>
+        </div>
+
+        <section class="section">
+          <div class="section-heading">
+            <h2>美股先行指標</h2>
+            <span>盤前必看</span>
+          </div>
+          <div class="indicator-strip">
+            <div><b>台積電 ADR</b><span class="down">-6.69%</span></div>
+            <div><b>輝達</b><span class="down">-6.20%</span></div>
+            <div><b>費半</b><span class="down">-10.26%</span></div>
+            <div><b>NASDAQ</b><span class="down">-4.18%</span></div>
+            <div><b>美債 10Y</b><span class="up">+1.32%</span></div>
+            <div><b>VIX</b><span class="up">21.6</span></div>
+            <div><b>美元指數</b><span class="up">+0.66%</span></div>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-heading">
+            <h2>四檔持股狀態</h2>
+            <span>點擊看分析</span>
+          </div>
+          <div class="holding-list" id="homeHoldings"></div>
+        </section>
+
+        <section class="section">
+          <div class="section-heading">
+            <h2>今日提醒</h2>
+            <span>減碼 / 加碼</span>
+          </div>
+          <div class="reminder-compact">
+            <p>跌破關鍵價：提醒分批減碼</p>
+            <p>短線漲太多：提醒獲利減碼</p>
+            <p>回測守住支撐：提醒可追蹤加碼</p>
+          </div>
+        </section>
+      </section>
+
+      <section class="page" id="page-holdings" aria-labelledby="tab-holdings">
+        <div class="section-heading page-title">
+          <h2>持股</h2>
+          <span>4 檔核心追蹤</span>
+        </div>
+        <div class="holding-stack" id="holdingCards"></div>
+      </section>
+
+      <section class="page" id="page-indicators" aria-labelledby="tab-indicators">
+        <div class="section-heading page-title">
+          <h2>先行指標</h2>
+          <span>判斷今日衝擊</span>
+        </div>
+        <div class="indicator-groups" id="indicatorGroups"></div>
+        <section class="section impact-section">
+          <div class="section-heading">
+            <h2>對持股影響</h2>
+            <span>AI 解讀</span>
+          </div>
+          <div class="impact-table" id="impactTable"></div>
+        </section>
+      </section>
+
+      <section class="page" id="page-strategy" aria-labelledby="tab-strategy">
+        <div class="strategy-hero">
+          <p>每日開盤前建議</p>
+          <h2>中大型修正，先看支撐</h2>
+          <span>更新時間：08:30｜AI 總分 54</span>
+        </div>
+        <section class="section">
+          <h2>今日盤前結論</h2>
+          <p class="strategy-copy">
+            AI 族群出現大幅獲利了結，判定為中大型修正；目前不是金融危機，也不是股災。
+            台積電守 2200、廣達守 360、鴻海守 270，仍視為 AI 主升段中的修正；若三者跌破且收不回，才判定中期修正開始。
+          </p>
+        </section>
+        <section class="section">
+          <div class="section-heading">
+            <h2>時間策略</h2>
+            <span>今日節奏</span>
+          </div>
+          <div class="timeline" id="strategyTimeline"></div>
+        </section>
+        <section class="section">
+          <div class="section-heading">
+            <h2>AI 分數拆解</h2>
+            <span>5 因子</span>
+          </div>
+          <div class="score-breakdown" id="scoreBreakdown"></div>
+        </section>
+      </section>
+
+      <section class="page" id="page-alerts" aria-labelledby="tab-alerts">
+        <div class="section-heading page-title">
+          <h2>提醒</h2>
+          <span>價格、AI、先行指標</span>
+        </div>
+        <div id="alertGroups"></div>
+      </section>
+
+      <section class="page settings-page" id="page-settings">
+        <div class="section-heading page-title">
+          <h2>設定</h2>
+          <span>持股與通知</span>
+        </div>
+        <section class="section">
+          <h2>持股管理</h2>
+          <form class="settings-form" id="holdingSettingsForm">
+            <div class="settings-list" id="holdingSettings"></div>
+            <button class="primary-button" type="submit">儲存持股設定</button>
+            <p class="settings-saved" id="settingsSaved" role="status"></p>
+          </form>
+        </section>
+        <section class="section">
+          <h2>通知設定</h2>
+          <label class="toggle-row"><span>LINE 通知</span><input type="checkbox" checked /></label>
+          <label class="toggle-row"><span>App 推播</span><input type="checkbox" checked /></label>
+          <button class="secondary-button" id="testNotificationButton" type="button">測試通知</button>
+          <p class="settings-saved" id="notificationStatus" role="status"></p>
+        </section>
+        <section class="section">
+          <h2>更新頻率</h2>
+          <div class="segmented" role="group" aria-label="更新頻率">
+            <button class="is-selected" type="button">即時</button>
+            <button type="button">5 分鐘</button>
+            <button type="button">15 分鐘</button>
+          </div>
+        </section>
+        <section class="section">
+          <h2>安全</h2>
+          <button class="secondary-button" id="installButton" type="button" hidden>安裝到手機</button>
+          <button class="secondary-button" id="logoutButton" type="button">登出並鎖定</button>
+        </section>
+      </section>
+
+      <nav class="bottom-nav" aria-label="主選單">
+        <button class="nav-item is-active" id="tab-home" data-page="home" type="button">
+          <span>⌂</span>首頁
+        </button>
+        <button class="nav-item" id="tab-holdings" data-page="holdings" type="button">
+          <span>▦</span>持股
+        </button>
+        <button class="nav-item" id="tab-indicators" data-page="indicators" type="button">
+          <span>◇</span>先行指標
+        </button>
+        <button class="nav-item" id="tab-strategy" data-page="strategy" type="button">
+          <span>✦</span>AI 策略
+        </button>
+        <button class="nav-item" id="tab-alerts" data-page="alerts" type="button">
+          <span>◉</span>提醒
+        </button>
+      </nav>
+    </main>
+
+    <dialog id="holdingDialog">
+      <div class="dialog-head">
+        <div>
+          <p class="eyebrow" id="dialogSymbol"></p>
+          <h2 id="dialogName"></h2>
+        </div>
+        <button class="icon-button" id="closeDialog" type="button" aria-label="關閉">×</button>
+      </div>
+      <div id="dialogContent"></div>
+    </dialog>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
