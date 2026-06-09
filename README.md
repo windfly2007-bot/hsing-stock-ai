@@ -12,6 +12,19 @@
 - 漲太多減碼提醒
 - 後續加碼提醒
 - 手機加入主畫面
+- GitHub Actions 排程更新行情資料
+
+## 自動更新資料
+
+App 會讀取 `data/market-data.json`。
+
+GitHub Actions 會依照 `.github/workflows/update-market-data.yml` 的排程執行：
+
+- 08:30 台北時間
+- 10:30 台北時間
+- 13:35 台北時間
+
+資料更新後會自動 commit `data/market-data.json`。
 
 ## GitHub Pages 部署
 

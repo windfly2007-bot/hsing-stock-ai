@@ -1,6 +1,7 @@
 const APP_PASSWORD = "windfly2007";
 const AUTH_KEY = "hsing-stock-ai-unlocked";
 const HOLDINGS_KEY = "hsing-stock-ai-holdings";
+const MARKET_DATA_URL = "./data/market-data.json";
 let deferredInstallPrompt = null;
 
 const holdings = [
@@ -86,13 +87,13 @@ const holdings = [
   }
 ];
 
-const indicatorGroups = [
+let indicatorGroups = [
   { title: "AI / 半導體市場", items: [["台積電 ADR", "415.23 / -6.69%", "down"], ["輝達", "205.10 / -6.20%", "down"], ["費城半導體", "12222.33 / -10.26%", "down"], ["NASDAQ", "25713.68 / -4.18%", "down"]] },
   { title: "風險與美元", items: [["美債 10Y", "4.54 / +1.32%", "up"], ["VIX", "21.6", "up"], ["美元指數", "100.07 / +0.66%", "up"]] },
   { title: "台股相關", items: [["台指期夜盤", "待更新", "flat"], ["台幣匯率", "待更新", "flat"], ["外資期貨 OI", "待更新", "flat"], ["加權指數", "待更新", "flat"]] }
 ];
 
-const impacts = [
+let impacts = [
   ["費半重挫", "-10.26%", "AI 族群獲利了結"],
   ["台積電 ADR 下跌", "-6.69%", "台積電看 2200 支撐"],
   ["VIX 21.6", "升高", "中大型修正，非股災"],
@@ -180,12 +181,94 @@ function saveHoldingsFromSettings() {
 }
 
 function renderAll() {
+  renderMarketSummary();
+  renderHomeIndicators();
   renderHomeHoldings();
   renderHoldingCards();
   renderIndicators();
   renderStrategy();
   renderAlerts();
   renderHoldingSettings();
+}
+
+function renderMarketSummary() {
+  const score = document.querySelector("#marketScore");
+  if (score && !score.dataset.liveScore) score.textContent = "AI 總分 54";
+}
+
+function renderHomeIndicators() {
+  const target = document.querySelector("#homeIndicators");
+  if (!target) return;
+
+  const homeItems = [
+    ["台積電 ADR", "-6.69%", "down"],
+    ["輝達", "-6.20%", "down"],
+    ["費半", "-10.26%", "down"],
+    ["NASDAQ", "-4.18%", "down"],
+    ["VIX", "21.6", "up"],
+    ["美元指數", "+0.66%", "up"]
+  ];
+
+  const fromMarketData = indicatorGroups.flatMap(group => group.items).filter(([name]) =>
+    ["台積電 ADR", "輝達", "費城半導體", "NASDAQ", "VIX", "美元指數"].includes(name)
+  );
+  const items = fromMarketData.length ? fromMarketData : homeItems;
+
+  target.innerHTML = items.map(([name, value, direction]) => `
+    <div><b>${name === "費城半導體" ? "費半" : name}</b><span class="${direction}">${value}</span></div>
+  `).join("");
+}
+
+function applyMarketData(data) {
+  if (data.market) {
+    const signal = document.querySelector("#marketSignal");
+    const score = document.querySelector("#marketScore");
+    const updated = document.querySelector("#marketUpdated");
+    const advice = document.querySelector("#marketAdvice");
+
+    if (signal && data.market.signal) {
+      signal.textContent = data.market.signal;
+      signal.className = `signal ${data.market.signalClass || "signal-risk"}`;
+    }
+    if (score && Number.isFinite(Number(data.market.score))) {
+      score.textContent = `AI 總分 ${data.market.score}`;
+      score.dataset.liveScore = "true";
+    }
+    if (updated && data.updatedAt) updated.textContent = `更新時間：${data.updatedAt}`;
+    if (advice && data.market.advice) advice.textContent = `建議：${data.market.advice}`;
+  }
+
+  if (data.holdings) {
+    holdings.forEach(stock => {
+      const live = data.holdings[stock.symbol];
+      if (!live) return;
+      if (Number.isFinite(Number(live.price))) stock.price = Number(live.price);
+      if (Number.isFinite(Number(live.score))) stock.score = Number(live.score);
+      if (live.trend) stock.trend = live.trend;
+      recalcStock(stock);
+    });
+  }
+
+  if (Array.isArray(data.indicatorGroups)) {
+    indicatorGroups = data.indicatorGroups;
+  }
+
+  if (Array.isArray(data.impacts)) {
+    impacts = data.impacts;
+  }
+
+  renderAll();
+}
+
+async function loadMarketData() {
+  try {
+    const response = await fetch(`${MARKET_DATA_URL}?t=${Date.now()}`, { cache: "no-store" });
+    if (!response.ok) return;
+    const data = await response.json();
+    applyMarketData(data);
+  } catch (error) {
+    console.warn("Market data update failed", error);
+  }
 }
 
 function renderHomeHoldings() {
@@ -470,3 +553,4 @@ bindEvents();
 initPasswordGate();
 initPwaInstall();
 registerServiceWorker();
+loadMarketData();

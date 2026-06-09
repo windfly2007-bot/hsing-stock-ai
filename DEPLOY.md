@@ -41,6 +41,16 @@
 - 排程抓價與策略更新
 - Cloudflare Access 或正式帳號系統
 
+## 自動更新行情
+
+已加入 GitHub Actions 排程：
+
+- `.github/workflows/update-market-data.yml`
+- `scripts/update_market_data.py`
+- `data/market-data.json`
+
+部署到 GitHub 後，請到 `Actions` 頁面確認 `Update Market Data` 可以手動執行。
+
 ## 更新後手機還看到舊版
 
 請使用新網址加版本參數，例如：

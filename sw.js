@@ -1,9 +1,10 @@
-const CACHE_NAME = "hsing-stock-ai-v7";
+const CACHE_NAME = "hsing-stock-ai-v8";
 const APP_ASSETS = [
   "./",
   "./index.html",
   "./styles.css",
   "./app.js",
+  "./data/market-data.json",
   "./manifest.json",
   "./icon.svg"
 ];

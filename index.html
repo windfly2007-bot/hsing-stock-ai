@@ -42,13 +42,13 @@
       <section class="page is-active" id="page-home" aria-labelledby="tab-home">
         <div class="status-panel">
           <div class="status-main">
-            <span class="signal signal-risk">偏空</span>
+            <span class="signal signal-risk" id="marketSignal">偏空</span>
             <p>今日市場燈號</p>
-            <strong>AI 總分 54</strong>
+            <strong id="marketScore">AI 總分 54</strong>
           </div>
           <div class="status-note">
-            <span>更新時間：08:28</span>
-            <b>建議：先控風險，09:30 後確認是否止跌。</b>
+            <span id="marketUpdated">更新時間：08:28</span>
+            <b id="marketAdvice">建議：先控風險，09:30 後確認是否止跌。</b>
           </div>
         </div>
 
@@ -57,7 +57,7 @@
             <h2>美股先行指標</h2>
             <span>盤前必看</span>
           </div>
-          <div class="indicator-strip">
+          <div class="indicator-strip" id="homeIndicators">
             <div><b>台積電 ADR</b><span class="down">-6.69%</span></div>
             <div><b>輝達</b><span class="down">-6.20%</span></div>
             <div><b>費半</b><span class="down">-10.26%</span></div>
@@ -214,6 +214,6 @@
       <div id="dialogContent"></div>
     </dialog>
 
-    <script src="./app.js?v=7"></script>
+    <script src="./app.js?v=8"></script>
   </body>
 </html>
