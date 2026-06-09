@@ -65,17 +65,18 @@ def load_existing() -> dict:
 def main() -> None:
     import yfinance as yf
 
+    DATA_FILE.parent.mkdir(parents=True, exist_ok=True)
     existing = load_existing()
     taipei_now = datetime.now(ZoneInfo("Asia/Taipei")).strftime("%Y-%m-%d %H:%M")
 
     holdings = existing.get("holdings", {})
     for stock_id, ticker in HOLDINGS.items():
-      price, _ = fetch_quote(yf, ticker)
-      if price is None:
-          continue
-      current = holdings.get(stock_id, {})
-      current["price"] = round(price, 2)
-      holdings[stock_id] = current
+        price, _ = fetch_quote(yf, ticker)
+        if price is None:
+            continue
+        current = holdings.get(stock_id, {})
+        current["price"] = round(price, 2)
+        holdings[stock_id] = current
 
     values = {}
     for name, ticker in INDICATORS.items():

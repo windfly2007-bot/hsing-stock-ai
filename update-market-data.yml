@@ -25,6 +25,9 @@ jobs:
       - name: Install dependencies
         run: pip install yfinance
 
+      - name: Ensure data directory
+        run: mkdir -p data
+
       - name: Update market data
         run: python scripts/update_market_data.py
 
