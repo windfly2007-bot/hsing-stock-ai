@@ -40,20 +40,35 @@ def format_pct(change: float) -> str:
     return f"{change:+.2f}%"
 
 
-def fetch_quote(yf, symbol: str) -> tuple[float | None, float | None]:
-    history = yf.Ticker(symbol).history(period="5d", interval="1d")
+def closes_from_history(history) -> list[float]:
     if history.empty or "Close" not in history:
+        return []
+    return [float(value) for value in history["Close"].dropna().tolist()]
+
+
+def fetch_quote(yf, symbol: str) -> tuple[float | None, float | None]:
+    ticker = yf.Ticker(symbol)
+
+    daily_closes = closes_from_history(ticker.history(period="5d", interval="1d"))
+    intraday_closes = closes_from_history(ticker.history(period="5d", interval="5m"))
+
+    if intraday_closes:
+        last = intraday_closes[-1]
+    elif daily_closes:
+        last = daily_closes[-1]
+    else:
         return None, None
 
-    closes = [float(value) for value in history["Close"].dropna().tolist()]
-    if not closes:
-        return None, None
+    previous = None
+    if len(daily_closes) >= 2:
+        previous = daily_closes[-2]
+    elif len(intraday_closes) >= 2:
+        previous = intraday_closes[-2]
 
-    last = closes[-1]
-    if len(closes) < 2 or closes[-2] == 0:
+    if not previous:
         return last, None
 
-    change = ((last - closes[-2]) / closes[-2]) * 100
+    change = ((last - previous) / previous) * 100
     return last, change
 
 
