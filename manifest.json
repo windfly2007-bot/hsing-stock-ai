@@ -2,7 +2,7 @@
   "name": "Hsing Stock AI",
   "short_name": "Stock AI",
   "description": "個人持股決策助理",
-  "start_url": "./index.html?v=11",
+  "start_url": "./index.html?v=12",
   "scope": "./",
   "display": "standalone",
   "background_color": "#eef2f1",

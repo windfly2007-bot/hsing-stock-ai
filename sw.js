@@ -1,4 +1,4 @@
-const CACHE_NAME = "hsing-stock-ai-v11";
+const CACHE_NAME = "hsing-stock-ai-v12";
 const APP_ASSETS = [
   "./",
   "./index.html",
