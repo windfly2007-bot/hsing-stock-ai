@@ -2,9 +2,7 @@ name: Update Market Data
 
 on:
   schedule:
-    - cron: "30 0 * * 1-5"
-    - cron: "30 2 * * 1-5"
-    - cron: "35 5 * * 1-5"
+    - cron: "*/30 0-6 * * 1-6"
   workflow_dispatch:
 
 permissions:
