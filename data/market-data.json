@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-03 13:43",
+  "updatedAt": "2026-07-03 16:47",
   "market": {
     "signal": "偏空",
     "signalClass": "signal-risk",
@@ -8,22 +8,22 @@
   },
   "holdings": {
     "2330": {
-      "price": 2455.0,
+      "price": 2450.0,
       "score": 82,
       "trend": "正常修正"
     },
     "2317": {
-      "price": 241.0,
+      "price": 240.5,
       "score": 68,
       "trend": "正常整理"
     },
     "2382": {
-      "price": 377.5,
+      "price": 378.0,
       "score": 55,
       "trend": "關鍵價附近"
     },
     "2027": {
-      "price": 41.1,
+      "price": 41.15,
       "score": 72,
       "trend": "續抱觀察"
     },
@@ -69,7 +69,7 @@
         ],
         [
           "VIX",
-          "16.14 / -2.71%",
+          "15.93 / -1.36%",
           "down"
         ],
         [
