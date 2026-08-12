@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-12 13:22",
+  "updatedAt": "2026-08-12 14:50",
   "market": {
     "signal": "偏空",
     "signalClass": "signal-risk",
@@ -8,7 +8,7 @@
   },
   "holdings": {
     "2330": {
-      "price": 2410.0,
+      "price": 2405.0,
       "score": 82,
       "trend": "正常修正"
     },
@@ -18,17 +18,17 @@
       "trend": "正常整理"
     },
     "2382": {
-      "price": 323.5,
+      "price": 322.5,
       "score": 55,
       "trend": "關鍵價附近"
     },
     "2027": {
-      "price": 47.0,
+      "price": 46.95,
       "score": 72,
       "trend": "續抱觀察"
     },
     "2884": {
-      "price": 36.7,
+      "price": 36.6,
       "score": 70,
       "trend": "金融股偏多"
     }
